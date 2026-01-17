@@ -3,6 +3,7 @@ module sentinel
 go 1.25.5
 
 require (
+	github.com/kardianos/service v1.2.4
 	github.com/shirou/gopsutil/v4 v4.25.12
 	google.golang.org/grpc v1.78.0
 	google.golang.org/protobuf v1.36.11
