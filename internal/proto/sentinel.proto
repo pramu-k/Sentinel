@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package sentinel;
+
+option go_package = "sentinel/internal/proto";
+
+import "google/protobuf/timestamp.proto";
+
+service Sentinel {
+  // Agent streams metrics to HQ
+  rpc StreamMetrics(stream MetricBatch) returns (Ack);
+}
+
+message MetricBatch {
+  string server_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  repeated Metric metrics = 3;
+}
+
+message Metric {
+  string type = 1; // e.g., "cpu_usage", "memory_used", "disk_free", "service_cpu:<name>"
+  double value = 2;
+  map<string, string> tags = 3; // e.g. {"core": "0"}, {"service": "nginx"}
+}
+
+message Ack {
+  bool success = 1;
+  string message = 2;
+}
