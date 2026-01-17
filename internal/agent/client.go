@@ -17,6 +17,13 @@ type Client struct {
 	Stream    proto.Sentinel_StreamMetricsClient
 }
 
+func NewClient(cfg *Config, collector *Collector) *Client {
+	return &Client{
+		Config:    cfg,
+		Collector: collector,
+	}
+}
+
 func (c *Client) Start(ctx context.Context) error {
 	log.Printf("Connecting to HQ at %s...", c.Config.HQAddress)
 	// For production, use credentials (TLS). For now, insecure is fine.
