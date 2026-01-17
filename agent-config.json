@@ -1,0 +1,10 @@
+{
+    "hq_address": "localhost:9090",
+    "server_id": "winserv-01",
+    "collection_interval": "5s",
+    "services": [
+        "chrome",
+        "postgres",
+        "code"
+    ]
+}
