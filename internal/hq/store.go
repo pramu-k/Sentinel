@@ -1,7 +1,9 @@
 package hq
 
 import (
+	"context"
 	"encoding/json"
+	"sentinel/internal/proto"
 	"time"
 )
 
@@ -24,4 +26,13 @@ type ServiceStatus struct {
 	ServiceName string    `json:"service_name"`
 	Status      float64   `json:"status"`
 	LastSeen    time.Time `json:"last_seen"`
+}
+
+type MetricStore interface {
+	Init(ctx context.Context) error
+	SaveBatch(ctx context.Context, batch *proto.MetricBatch, ipAddress string) error
+	ListServers(ctx context.Context) ([]ServerStatus, error)
+	GetMetrics(ctx context.Context, serverID string) ([]Metric, error)
+	GetServiceStatus(ctx context.Context, serverID string) ([]ServiceStatus, error)
+	Close()
 }
