@@ -36,17 +36,19 @@ func main() {
 	grpcPort := ":9090"
 	httpPort := ":8080"
 
-	lis, err := net.Listen("tcp", grpcPort)
-	if err != nil {
-		log.Fatalf("Failed to listen on grpc port: %v", err)
-	}
-	grpcServer := grpc.NewServer()
-	hqService := hq.NewGRPCServer(store)
-	hqService.Register(grpcServer)
-	log.Printf("gRPC Server listening on %s", grpcPort)
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("gRPC Server failed: %v", err)
-	}
+	go func() {
+		lis, err := net.Listen("tcp", grpcPort)
+		if err != nil {
+			log.Fatalf("Failed to listen on grpc port: %v", err)
+		}
+		grpcServer := grpc.NewServer()
+		hqService := hq.NewGRPCServer(store)
+		hqService.Register(grpcServer)
+		log.Printf("gRPC Server listening on %s", grpcPort)
+		if err := grpcServer.Serve(lis); err != nil {
+			log.Fatalf("gRPC Server failed: %v", err)
+		}
+	}()
 
 	// 4. Start REST Server (Blocking)
 	restServer := hq.NewRESTServer(store)
