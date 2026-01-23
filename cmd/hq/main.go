@@ -34,6 +34,7 @@ func main() {
 
 	// 3. Start gRPC Server
 	grpcPort := ":9090"
+	httpPort := ":8080"
 
 	lis, err := net.Listen("tcp", grpcPort)
 	if err != nil {
@@ -45,5 +46,12 @@ func main() {
 	log.Printf("gRPC Server listening on %s", grpcPort)
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("gRPC Server failed: %v", err)
+	}
+
+	// 4. Start REST Server (Blocking)
+	restServer := hq.NewRESTServer(store)
+	log.Printf("REST API listening on %s", httpPort)
+	if err := restServer.Run(httpPort); err != nil {
+		log.Fatalf("REST API failed: %v", err)
 	}
 }

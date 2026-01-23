@@ -71,3 +71,7 @@ func (s *RESTServer) handleGetServiceStatus(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, services)
 }
+
+func (s *RESTServer) Run(addr string) error {
+	return s.Router.Run(addr)
+}
