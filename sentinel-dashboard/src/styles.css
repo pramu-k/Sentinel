@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0f172a;
+    /* Slate 900 */
+    color: #e2e8f0;
+    /* Slate 200 */
+    font-family: 'Inter', sans-serif;
+}
