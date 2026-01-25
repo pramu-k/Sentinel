@@ -1,1 +1,30 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+    <header>
+        <h1>Sentinel Dashboard</h1>
+    </header>
+
+    <main>
+        <div class="server-grid">
+            @for (server of servers; track server.server_id) {
+            <div class="server-card" [routerLink]="['/server', server.server_id]">
+                <div class="status-indicator" [class.alive]="isAlive(server.last_seen)"></div>
+                <h2>{{ server.server_id }}</h2>
+                <p><strong>IP:</strong> {{ server.ip_address || 'Unknown' }}</p>
+                <p><strong>Last Seen:</strong> {{ server.last_seen | date:'mediumTime' }}</p>
+                <p class="click-hint">Click for details</p>
+            </div>
+            }
+        </div>
+
+        @if (servers.length === 0) {
+        <div class="no-data">
+            @if (errorMessage) {
+            <div style="color: #ef4444; font-weight: bold; margin-bottom: 1rem;">
+                Error: {{ errorMessage }}
+            </div>
+            }
+            No servers found. Start an agent to see data.
+        </div>
+        }
+    </main>
+</div>
