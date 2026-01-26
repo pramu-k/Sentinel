@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-  servers: ServerStatus[] = [];
+    servers: ServerStatus[] = [];
     errorMessage: string = '';
 
     constructor(private sentinel: SentinelService, private cdr: ChangeDetectorRef) { }
